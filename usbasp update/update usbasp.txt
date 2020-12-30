@@ -1,0 +1,12 @@
+
+#download and unzip
+wget https://www.fischl.de/usbasp/usbasp.2011-05-28.tar.gz
+tar -xvf usbasp.2011-05-28.tar.gz
+cd /usbasp.2011-05-28
+
+###flash with only jumper 2 set
+sudo avrdude -p atmega8 -c usbasp -U flash:w:bin/firmware/usbasp.atmega8.2011-05-28.hex:i
+
+###verify with jumper 2 unset and jumper 3 set
+avrdude -p attiny13 -c usbasp -B 1024 -F -P usb
+
