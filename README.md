@@ -7,6 +7,7 @@ random projects with atmega328p using avr gcc and make including:
 each atemga328p pin controlls 2 leds wich are multiplexed using one additional pin to switch two npn- & pnp-transistors to select wich leds are used
 - automatic plant watering using 5x humidity sensors and pumps (plant_watering); every ~1min the watchdoch triggers an interrupt, the voltage values from the sensors are read (ADC) and if they lie below a threshold the pumps are turned on to water the individual plants. then the atmega328p is put into deep sleep.
 
+-----
 
 ## steps to install the toolchain in windows:
 
@@ -27,3 +28,20 @@ avrdude
 
 ### setup USBasp
 install libusbK driver using Zadig-2.4.exe
+
+-----
+
+## update USBasp programmer
+
+### download
+source: https://www.fischl.de/usbasp/usbasp.2011-05-28.tar.gz
+
+### unzip
+tar -xvf usbasp.2011-05-28.tar.gz
+cd /usbasp.2011-05-28
+
+### flash with only jumper 2 set
+sudo avrdude -p atmega8 -c usbasp -U flash:w:bin/firmware/usbasp.atmega8.2011-05-28.hex:i
+
+### verify with jumper 2 unset and jumper 3 set
+avrdude -p attiny13 -c usbasp -B 1024 -F -P usb
