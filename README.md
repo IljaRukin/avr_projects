@@ -9,6 +9,33 @@ each atemga328p pin controlls 2 leds wich are multiplexed using one additional p
 
 -----
 
+## compile and flash
+the included makefile is as simple as possible. it supports compiling/linking and flashing. to do so type:
+make compile
+make flash
+
+and to remove the .o .elf files type:
+make clean
+
+if flashing should be done slowly (when the clock speed is set to 128kHz or below) type:
+make flash_slow
+
+the makefile also has some predefined fuse configurations for the atmega328p. Be careful when changing fuses to not set write protection or disable the isp interface.
+here are the predefined fuse settings:
+fuses_default
+fuses_internal_8mhz
+fuses_internal_1mhz
+fuses_external_16mhz
+
+for the last two beware: slow sck programmer needed:
+fuses_internal_128khz
+fuses_internal_16khz
+
+to display all commands type:
+make help
+
+-----
+
 ## steps to install the toolchain in windows:
 
 ### install
