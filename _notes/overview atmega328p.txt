@@ -1,0 +1,89 @@
+####################avr atmel atmega328p####################
+
+#####specification
+package						DIP32
+processor					8bit AVR (RISC, Harvard Architecture)
+							# 8bit data bus = 2^8=256 bit
+							# 16bit adress bus = 2^16=65536 bit
+flash						32kB (read-while-write) (non volatile)
+eeprom						2kB (non volatile)
+sram						1kB (volatile)
+general purpose registers	32 (R0 to R31) , 8bit
+speed						20MHz (8MHZ internal)
+
+peripheral banks			PA/PB/PC/PD
+digital peripherals			1 UART/USART, 2 SPI, 1 I2C
+capture compare peripheral	1 Input Capture (capture time of event), 1 comparator, 6 PWM
+ADC							6-channel 10-bit (read voltage with 10bit accuracy)
+							(ADC1 = pin with ADC, pin label 1)
+timers						2 x 8-bit, 1 x 16-bit,1 watchdog
+							for counting, sheduling events, timing, pwm
+							(OC1A = pin with PWM (using timer 1,pin label A))
+interrupts					triggered by events or inputs to run some code and go back where it left from
+temperature range			-40 to 85 °C
+operating voltage			1.8 to 5.5 V
+pin count					32 (23 general purpose I/O lines)
+debug						debugWire & JTAG
+
+
+programming ist done over spi interface, wich is called isp
+used pins are: vcc, gnd, sck, miso, mosi, reset,
+
+
+#####software (linux)
+
+sudo apt-get install:
+C/C++->bin compiler					gcc-avr
+upload								avrdude
+assembler,linker,...				binutils-avr
+C-Library,Headers					avr-libc
+automate process					make
+
+
+#####set fuses
+#online configuration of fuses:
+http://www.engbedded.com/fusecalc/
+
+1=disabled; 0=enabled
+
+bit		default		function
+low fuse byte
+7		0			clock divide by 8
+6		1			clock out at PORTB0
+5		1			startup time 1
+4		0			startup time 0
+3		0			clock source 3
+2		0			clock source 2
+1		1			clock source 1
+0		0			clock source 0
+high fuse byte
+7		1!			disable reset pin PC6
+6		1!			jtag debugger (debugWire on PC6)
+5		0!			SPI programming
+4		1			watchdog timer always on (=>timer triggers chip reset)
+3		1			preserve eeprom memory trough chip erase
+2		0			boot sector size 1
+1		0			boot sector size 0
+0		1			boot reset vector (enable to start from bootloader  instead of programm )
+extended
+1		1			brown out detection 1 (low voltage shutdown)
+0		1			brown out detection 0 (low voltage shutdown)
+
+default
+low:0x62 high:0xD9 extended:0xFF
+
+8mhz internal osz, smallest boot partition 256B, no boatloader, preserve eeprom,...
+low:0b11100010 high:0b11010111 extended:0b11111111
+low:0xE2 high:0xD7 extended:0xFF
+
+1mhz internal osz
+low:0x62 high:0xD7 extended:0xFF
+
+128kHz internal osz
+low:0xE3 high:0xD7 extended:0xFF
+
+16kHz internal osz
+low:0x63 high:0xD7 extended:0xFF
+
+16MHz external osz
+low:0xF7 high:0xD7 extended:0xFF
