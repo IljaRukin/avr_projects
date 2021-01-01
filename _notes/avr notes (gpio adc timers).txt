@@ -1,0 +1,116 @@
+
+#####delay function
+#include <util/delay.h>
+_delay_ms(15);
+
+#####array saved in flash and loaded into ram
+uint8_t mydata[2][2]={{0xff,0xff},{0xff,0xff}};
+#####read data
+mydata		//by variable name
+ptr = &mydata;
+ptr*		//by pointer to adress
+//when mydata in struct mystruct, read data:
+mystruct.mydata	//by variable name
+ptr = &mystruct;
+(ptr*).mydata		//by pointer to adress
+ptr->mydata
+
+#####array saved in flash and loaded from flash (for big arrays)
+#include <avr/pgmspace.h>
+uint8_t mydata[2][2] PROGMEM ={{0xff,0xff},{0xff,0xff}};
+#####read data byte with pointer
+ptr = &mydata[i][j];
+pgm_read_byte(ptr*)
+
+
+
+#####setup peripherals
+Data Direction Register (select Port: 0=input / 1=output)		DDRB/DDRC/DDRD
+Data Output Registers											PORTB
+Data Input Registers											PINB
+
+#####output
+DDRD |= 0b11111111;			//enable PD as output (from PD0 to PD7)
+PORTD &= ~0b11111111;		//set output to zero
+PORTD |= 0b11111111;		//set output to one
+
+#####input
+DDRD &= ~0b11111111;		//enable PD as input (from PD0 to PD7)
+PORTD &= ~0b11111111;		//disable pullup
+PORTD |= 0b11111111;		//set pullup
+PIND						//input values (low/high) are stored here
+bool value = PIND & (1 << PIND4)	//example: read PD4
+
+#####ADC
+DDRC &= ~0b00111111;	//adc input pins PC0-PC5
+MCUCR |= (1 << PUD);	//disable all pull-ups
+ADMUX |= (1<<REFS1)|(1<<REFS0);	//Vref from pin Aref
+ADCSRA |= (1<<ADEN)|(1<<ADPS2)|(0<<ADPS1)|(1<<ADPS0);	//enable adc, prescaler 32
+
+uint16_t adc_read(uint8_t selected_pin)
+{
+	selected_pin &= 0b00000111;		//keep only last 3 bits
+	ADMUX = (ADMUX & 0xF8)|selected_pin;	//add this three bits to admux => selects pin
+	ADCSRA |= (1<<ADSC);			//start adc
+	while(ADCSRA & (1<<ADSC));		//wait till finished (ADSC bit becomes zero)
+	return (ADC);				//return results (ADCH & ADCL registers)
+}
+
+//read value:
+adc_read(0b00000000)
+
+#####sleep mode
+SMCR |= (1 << SE);	//enable sleep modes
+MCUCR |= (1 << BODS) | (1 << BODSE);	//disable brown out detection
+//additional power save configuration
+PRR |= (1 << PRTWI) | (1 << PRTIM2) | (1 << PRTIM0) | (1 << PRUSART0);//do not disable adc (1 << PRADC) and Timer1 (1 << PRTIM1)
+
+#####enable/disable interrupts
+cli();		//disable interrupts
+sei();		//enable interrupts
+
+#####watchdog as interrupt
+
+//set Watchdog as interrupt(8bit,prescaler:1024, runout every 2⁸cycles/128kHz = 8s)
+WDTCSR = (1<<WDCE)|(1<<WDE);
+WDTCSR = (1<<WDIE)|(1<<WDP3)|(1<<WDP0);
+
+ISR( WDT_vect ) {}
+
+#####external interrupt
+EIMSK |= 1<<INT0;	//enable INT0
+EICRA |= (1<<ISC01)|(0<<ISC00); // interrupt on falling edge
+
+ISR( INT0_vect ) {}		//execute on external interrupt
+
+#####8bit timer0
+TCCR0B |= (1 << CS02) | (0 << CS01) | (1 << CS00); 	//8bit timer with prescaler of 1024
+//OCR0A = 0xff;	//set compare value
+//OCR0B = 0xff;	//set compare value
+TCNT0 = 0;		//set timer value to zero
+TIMSK0 |= (1 << OCIE0A)|(1 << OCIE0B)|(1 << TOIE0);	//set timer compare and overflow interrupt
+
+ISR( TIMER0_COMPA_vect ) {}		//execute interrupt on timer compare A
+
+ISR( TIMER0_COMPB_vect ) {}		//execute interrupt on timer compare B
+
+ISR( TIMER0_OVF_vect ) {}	//execute interrupt on timer overflow
+
+#####16bit timer1
+//prescaler
+//TCCR1B |= (1 << CS12) | (0 << CS11) | (1 << CS10);	//prescaler: 1024
+//TCCR1B |= (1 << CS12) | (0 << CS11) | (0 << CS10);	//prescaler: 256
+//TCCR1B |= (1 << CS12) | (1 << CS11) | (1 << CS10);	//prescaler: 64
+//TCCR1B |= (0 << CS12) | (1 << CS11) | (0 << CS10);	//prescaler: 8
+//TCCR1B |= (0 << CS12) | (0 << CS11) | (1 << CS10);	//prescaler: 1
+OCR1A = 0xffff;		//set compare value (delay)
+OCR1B = 0xffff;		//set compare value (delay)
+TCNT1 = 0;		//set timer value to zero
+TIMSK1 |= (1 << OCIE1A)|(1 << OCIE1B)|(1 << TOIE1);	//set timer compare and overflow interrupt
+
+ISR( TIMER1_COMPA_vect ) {}		//execute interrupt on timer compare A
+
+ISR( TIMER1_COMPB_vect ) {}		//execute interrupt on timer compare B
+
+ISR( TIMER1_OVF_vect ) {}	//execute interrupt on timer overflow
+
