@@ -8,10 +8,15 @@ random projects with atmega328p using avr gcc and make including:
 
 
 here are some images:<br>
-<img src="/blink/blink_programmer.jpg" style="width:30%;">
-<img src="/simplecube/simplecube_action.jpg" style="width:30%;">
-<img src="/sphere/sphere_rotating.jpg" style="width:30%;">
-<img src="/plant_watering/plant_watering_plants.jpg" style="width:30%;">
+<img src="/blink/blink_programmer.jpg" style="width:20%;">
+<img src="/simplecube/simplecube_action.jpg" style="width:20%;">
+<img src="/sphere/sphere_rotating.jpg" style="width:20%;">
+<img src="/plant_watering/plant_watering_plants.jpg" style="width:20%;">
+
+and some video links: \
+[<img src="https://img.youtube.com/vi/U2wNzo6FmQA/maxresdefault.jpg" width="20%">](https://youtu.be/U2wNzo6FmQA)
+[<img src="https://img.youtube.com/vi/BXni1SBhagk/maxresdefault.jpg" width="20%">](https://youtu.be/BXni1SBhagk)
+[<img src="https://img.youtube.com/vi/_knFu966krE/maxresdefault.jpg" width="20%">](https://youtu.be/_knFu966krE)
 
 and some video links: \
 [<img src="https://img.youtube.com/vi/U2wNzo6FmQA/maxresdefault.jpg" width="20%">](https://youtu.be/U2wNzo6FmQA)
