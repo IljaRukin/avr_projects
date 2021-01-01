@@ -11,6 +11,9 @@ here are some images:<br>
 <img src="/simplecube/simplecube_action.jpg" style="width:30%;">
 <img src="/sphere/sphere_rotating.jpg" style="width:30%;">
 <img src="/plant_watering/plant_watering_plants.jpg" style="width:30%;">
+https://www.youtube.com/watch?v=U2wNzo6FmQA
+https://www.youtube.com/watch?v=BXni1SBhagk
+https://www.youtube.com/watch?v=_knFu966krE
 
 -----
 
