@@ -1,4 +1,4 @@
-#define F_CPU 1000000UL
+#define F_CPU 16000000UL
 #include <stdlib.h>
 #include <avr/io.h>
 #include <util/delay.h>
@@ -40,55 +40,53 @@ void update(void)
 			if(layer == 0)
 			{
 				PORTC^= (1 << PC5);
-				_delay_ms(15);
+				_delay_ms(1.2);
 				PORTC^= (1 << PC5);
 			}
 			else if(layer == 1)
 			{
 				PORTC^= (1 << PC4);
-				_delay_ms(15);
+				_delay_ms(1.5);
 				PORTC^= (1 << PC4);
 			}
 			else if(layer == 2)
 			{
 				PORTC^= (1 << PC3);
-				_delay_ms(20);
+				_delay_ms(1.5);
 				PORTC^= (1 << PC3);
 			}
 			else if(layer == 3)
 			{
 				PORTC^= (1 << PC2);
-				_delay_ms(5);
+				_delay_ms(0.3);
 				PORTC^= (1 << PC2);
 			}
 			else if(layer == 4)
 			{
 				PORTC^= (1 << PC1);
-				_delay_ms(5);
+				_delay_ms(0.3);
 				PORTC^= (1 << PC1);
 			}
 			else if(layer == 5)
 			{
 				PORTC^= (1 << PC0);
-				_delay_ms(1);
+				_delay_ms(0.3);
 				PORTC^= (1 << PC0);
 			}
 			else if(layer == 6)
 			{
 				PORTB^= (1 << PB5);
-				_delay_ms(1);
+				_delay_ms(0.3);
 				PORTB^= (1 << PB5);
 			}
 			else if(layer == 7)
 			{
 				PORTB^= (1 << PB4);
-				_delay_ms(1);
+				_delay_ms(0.3);
 				PORTB^= (1 << PB4);
 			}
 			PORTB |= (1 << PB2);
 	}
-	
-	for(uint8_t layer = 0; layer < 8; layer++){cube[layer][6] ^= 1 << 5;}	
 }
 
 ISR( TIMER0_OVF_vect )			//execute interrupt on timer overflow
@@ -160,13 +158,13 @@ void wave(void)
 	fill_cube();
 	
 	//fade to plane in the middle
-	_delay_ms(10000);
+	_delay_ms(100);
 	for(uint8_t row = 0; row < 8; row++)
 	{
 		cube[0][row]=255;
 		cube[4][row]=255;
 	}
-	_delay_ms(10000);
+	_delay_ms(100);
 	for(uint8_t row = 0; row < 8; row++)
 	{
 		cube[1][row]=255;
@@ -174,15 +172,15 @@ void wave(void)
 	}
 	
 	//wave rise
-	_delay_ms(10000);
+	_delay_ms(100);
 	flip_perimeter1(2);
 	flip_perimeter1(3);
-	_delay_ms(10000);
+	_delay_ms(100);
 	flip_perimeter1(3);
 	flip_perimeter1(4);
 	flip_perimeter2(2);
 	flip_perimeter2(3);
-	_delay_ms(10000);
+	_delay_ms(100);
 	flip_perimeter1(4);
 	flip_perimeter1(3);
 	flip_perimeter2(3);
@@ -191,7 +189,7 @@ void wave(void)
 	flip_perimeter3(3);
 	for(uint8_t cycle;cycle<10;cycle++)
 	{
-		_delay_ms(10000);
+		_delay_ms(100);
 		flip_perimeter1(3);
 		flip_perimeter1(2);
 		flip_perimeter2(4);
@@ -200,7 +198,7 @@ void wave(void)
 		flip_perimeter3(4);
 		flip_perimeter4(2);
 		flip_perimeter4(3);
-		_delay_ms(10000);
+		_delay_ms(100);
 		flip_perimeter1(2);
 		flip_perimeter1(1);
 		flip_perimeter2(3);
@@ -209,7 +207,7 @@ void wave(void)
 		flip_perimeter3(3);
 		flip_perimeter4(3);
 		flip_perimeter4(4);
-		_delay_ms(10000);
+		_delay_ms(100);
 		flip_perimeter1(1);
 		flip_perimeter1(0);
 		flip_perimeter2(2);
@@ -218,7 +216,7 @@ void wave(void)
 		flip_perimeter3(2);
 		flip_perimeter4(4);
 		flip_perimeter4(3);
-		_delay_ms(10000);
+		_delay_ms(100);
 		flip_perimeter1(0);
 		flip_perimeter1(1);
 		flip_perimeter2(1);
@@ -227,7 +225,7 @@ void wave(void)
 		flip_perimeter3(1);
 		flip_perimeter4(3);
 		flip_perimeter4(2);
-		_delay_ms(10000);
+		_delay_ms(100);
 		flip_perimeter1(1);
 		flip_perimeter1(2);
 		flip_perimeter2(0);
@@ -236,7 +234,7 @@ void wave(void)
 		flip_perimeter3(0);
 		flip_perimeter4(2);
 		flip_perimeter4(1);
-		_delay_ms(10000);
+		_delay_ms(100);
 		flip_perimeter1(2);
 		flip_perimeter1(3);
 		flip_perimeter2(1);
@@ -245,7 +243,7 @@ void wave(void)
 		flip_perimeter3(1);
 		flip_perimeter4(1);
 		flip_perimeter4(0);
-		_delay_ms(10000);
+		_delay_ms(100);
 		flip_perimeter1(3);
 		flip_perimeter1(4);
 		flip_perimeter2(2);
@@ -254,7 +252,7 @@ void wave(void)
 		flip_perimeter3(2);
 		flip_perimeter4(0);
 		flip_perimeter4(1);
-		_delay_ms(10000);
+		_delay_ms(100);
 		flip_perimeter1(4);
 		flip_perimeter1(3);
 		flip_perimeter2(3);
@@ -266,7 +264,7 @@ void wave(void)
 	}
 	
 	//fade into plane
-	_delay_ms(10000);
+	_delay_ms(100);
 	flip_perimeter1(3);
 	flip_perimeter1(2);
 	flip_perimeter2(4);
@@ -275,7 +273,7 @@ void wave(void)
 	flip_perimeter3(4);
 	flip_perimeter4(2);
 	flip_perimeter4(3);
-	_delay_ms(10000);
+	_delay_ms(100);
 	flip_perimeter1(2);
 	flip_perimeter1(1);
 	flip_perimeter2(3);
@@ -284,7 +282,7 @@ void wave(void)
 	flip_perimeter3(3);
 	flip_perimeter4(3);
 	flip_perimeter4(4);
-	_delay_ms(10000);
+	_delay_ms(100);
 	flip_perimeter1(1);
 	flip_perimeter1(0);
 	flip_perimeter2(2);
@@ -293,7 +291,7 @@ void wave(void)
 	flip_perimeter3(2);
 	flip_perimeter4(4);
 	flip_perimeter4(3);
-	_delay_ms(10000);
+	_delay_ms(100);
 	flip_perimeter1(0);
 	flip_perimeter1(1);
 	flip_perimeter2(1);
@@ -302,7 +300,7 @@ void wave(void)
 	flip_perimeter3(1);
 	flip_perimeter4(3);
 	flip_perimeter4(2);
-	_delay_ms(10000);
+	_delay_ms(100);
 	flip_perimeter1(1);
 	flip_perimeter1(2);
 	flip_perimeter2(0);
@@ -311,30 +309,30 @@ void wave(void)
 	flip_perimeter3(0);
 	flip_perimeter4(2);
 	flip_perimeter4(1);
-	_delay_ms(10000);
+	_delay_ms(100);
 	flip_perimeter2(1);
 	flip_perimeter2(2);
 	flip_perimeter3(0);
 	flip_perimeter3(1);
 	flip_perimeter4(1);
 	flip_perimeter4(0);
-	_delay_ms(10000);
+	_delay_ms(100);
 	flip_perimeter3(1);
 	flip_perimeter3(2);
 	flip_perimeter4(0);
 	flip_perimeter4(1);
-	_delay_ms(10000);
+	_delay_ms(100);
 	flip_perimeter4(1);
 	flip_perimeter4(2);
 
 	//expand plane to cube
-	_delay_ms(10000);
+	_delay_ms(100);
 	for(uint8_t row = 0; row < 8; row++)
 	{
 		cube[1][row]=0;
 		cube[3][row]=0;
 	}
-	_delay_ms(10000);
+	_delay_ms(100);
 	for(uint8_t row = 0; row < 8; row++)
 	{
 		cube[0][row]=0;
@@ -377,13 +375,11 @@ int main(void)
 	while( 1 )
 	{
 		fill_cube();
-		//clear_cube();
-		//wave();
-		_delay_ms(10000);
-		//fill_cube();
+		_delay_ms(500);
+		wave();
+		_delay_ms(500);
 		clear_cube();
-		//wave();
-		_delay_ms(10000);
+		_delay_ms(500);
 	}
 	return 0;
 }

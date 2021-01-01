@@ -59,6 +59,7 @@ install libusbK driver using Zadig-2.4.exe
 -----
 
 ## update USBasp programmer
+only tested on linux !
 
 ### download
 source: https://www.fischl.de/usbasp/usbasp.2011-05-28.tar.gz
