@@ -1,0 +1,38 @@
+#####C bit shift/manipulation
+
+left bitshift			number << digits
+right bitshift			number >> digits
+example: 0b00001000 == 1 << 3
+
+#add bits
+bitwise or				number0 | number1
+example: 0b01001000 == 1 << 3 | 1 << 6
+example: 0b00001000 == 1 << 3 | 1 << 3
+
+#flip bits
+bitwise xor				number0 ^ number1
+example: 0b01001000 == 1 << 3 ^ 1 << 6
+example: 0b00000000 == 1 << 3 ^ 1 << 3
+
+#
+						a		0	0	1	1
+						b		0	1	0	1
+bitwise and				a & b	0	0	0	1
+bitwise or				a | b	0	1	1	1
+bitwise xor				a ^ b	0	1	1	0
+bitwise not				~a		1		0
+
+
+###application
+#select bit position on port with bitshift
+(1 << PB1)
+#set bit with bitwise-or			(other pins remain unchanged)
+PORTB |= (1 << PB1);
+#flip (toggle) bit with bitwise-xor	(other pins remain unchanged)
+PORTB ^= (1 << PB1);
+#clear bit with bitwise-and and not	(other pins remain unchanged)
+PORTB &= ~(1 << PB1);
+
+combine multiple bits:
+PORTB |= (1 << PB0)|(1 << PB1)
+PORTB &= ~(1 << PB0) & ~(1 << PB1)
