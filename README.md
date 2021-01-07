@@ -27,62 +27,86 @@ make compile
 make flash
 ```
 
-and to remove the .o .elf files type:\
+and to remove the .o .elf files type:
+```
 make clean
+```
 
-if flashing should be done slowly (when the clock speed is set to 128kHz or below) type:\
+if flashing should be done slowly (when the clock speed is set to 128kHz or below) type:
+```
 make flash_slow
+```
 
-the makefile also has some predefined fuse configurations for the atmega328p. Be careful when changing fuses to not set write protection or disable the isp interface.\
-here are the predefined fuse settings:\
+the makefile also has some predefined fuse configurations for the atmega328p. Be careful when changing fuses to avoid setting write protection or disable the isp interface.\
+here are the predefined fuse settings:
+```
 fuses_default\
 fuses_internal_8mhz\
 fuses_internal_1mhz\
 fuses_external_16mhz
+```
 
-for the last two beware: slow sck programmer needed:\
+for the next two beware: slow sck programmer needed:
+```
 fuses_internal_128khz\
 fuses_internal_16khz
+```
 
-to display all commands type:\
+to display all commands type:
+```
 make help
+```
 
 -----
 
 ## steps to install the toolchain on windows:
 
-### install:
+### download and install:
+```
 https://www.microchip.com/en-us/development-tools-tools-and-software/gcc-compilers-avr-and-arm \
 https://sourceforge.net/projects/gnuwin32/files/make/ \
 https://sourceforge.net/projects/winavr/
+```
 
-### add to path:
+### add following folders to path:
+```
 C:\Program Files\avr8-gnu-toolchain-win32_x86\bin\
 C:\Program Files (x86)\GnuWin32\bin\
 C:\Program Files\avrdude
+```
 
 ### test functionality in terminal:
+```
 make -v\
 avr-gcc --version\
 avrdude
+```
 
 ### setup USBasp:
+```
 install libusbK driver using Zadig-2.5.exe
+```
 
 -----
 
 ## update USBasp programmer
 only tested on linux !
 
-### download:
+### download firmware:
 source: https://www.fischl.de/usbasp/usbasp.2011-05-28.tar.gz
 
 ### unzip:
+```
 tar -xvf usbasp.2011-05-28.tar.gz \
 cd /usbasp.2011-05-28
+```
 
 ### flash with only jumper 2 set:
+```
 sudo avrdude -p atmega8 -c usbasp -U flash:w:bin/firmware/usbasp.atmega8.2011-05-28.hex:i
+```
 
 ### verify with jumper 2 unset and jumper 3 set:
+```
 avrdude -p attiny13 -c usbasp -B 1024 -F -P usb
+```
