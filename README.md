@@ -1,13 +1,13 @@
 # avr_gcc_projects
 
 random projects with atmega328p using avr gcc and make including:
-- simple blinking LED on Pin PB0 (blink)
-- 8x8x5 LED cube controlled with shift registers (simplecube); 8x8bit shift registers to adress a layer and 5 pins to select each layer. LED values (on/off) are stored in an array and can be edited in the main loop. the cube is displayed by triggering a timer interrupt periodically. code is written for 8x8x8 cube, but layer 5,6,7 are not physically present.
-- rotating 40 LEDs to display earth globe (sphere); every rotation a magnet and hall sensor triggers an interrupt, wich is used to calculate the rotation frequency and the time for each slice of the globe to be displayed. each atemga328p pin controlls 2 leds wich are multiplexed using one additional pin to switch a npn- and one pnp-transistors to select wich leds are used
-- automatic plant watering using 5x humidity sensors and pumps (plant_watering); every ~1min the watchdog timer triggers an interrupt, the voltage values from the sensors are read (ADC) and if they lie below a threshold the pumps are turned on to water the individual plants. then the atmega328p is put into deep sleep again.
+- simple blinking LED on Pin PB0 (folder "blink")
+- 8x8x5 LED cube controlled with shift registers (folder "simplecube"); 8x 8bit shift registers to adress a layer and 5 pins to select each layer. LED values (on/off) are stored in an array and can be edited in the main loop. the cube is displayed by triggering a timer interrupt periodically. code is written for a 8x8x8 cube, but layer 5,6,7 are not physically present.
+- rotating 40 LEDs to display earth globe (folder "sphere"); every rotation a magnet and hall sensor triggers an interrupt, wich is used to calculate the rotation frequency and the time for each slice of the globe to be displayed. each atemga328p pin controlls 2 leds wich are multiplexed using one additional pin to switch a npn- and one pnp-transistors to select wich leds are used
+- automatic plant watering using 5x humidity sensors and pumps (folder "plant_watering"); every ~1min the watchdog timer triggers an interrupt, the voltage values from the sensors are read (ADC) and if they lie below a threshold the pumps are turned on to water the individual plants. then the atmega328p is put into deep sleep again.
 
 
-here are some images:<br>
+here are some images: \
 <img src="/blink/blink_programmer.jpg" style="width:20%;">
 <img src="/simplecube/simplecube_action.jpg" style="width:20%;">
 <img src="/sphere/sphere_rotating.jpg" style="width:20%;">
@@ -21,9 +21,11 @@ and some video links: \
 -----
 
 ## compile and flash
-the included makefile is as simple as possible. it supports compiling/linking and flashing. to do so type:\
-make compile\
+the included makefile is as simple as possible. it supports compiling/linking and flashing. to do so type:
+```
+make compile
 make flash
+```
 
 and to remove the .o .elf files type:\
 make clean
