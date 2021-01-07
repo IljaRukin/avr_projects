@@ -40,15 +40,15 @@ make flash_slow
 the makefile also has some predefined fuse configurations for the atmega328p. Be careful when changing fuses to avoid setting write protection or disable the isp interface.\
 here are the predefined fuse settings:
 ```
-fuses_default\
-fuses_internal_8mhz\
-fuses_internal_1mhz\
+fuses_default
+fuses_internal_8mhz
+fuses_internal_1mhz
 fuses_external_16mhz
 ```
 
 for the next two beware: slow sck programmer needed:
 ```
-fuses_internal_128khz\
+fuses_internal_128khz
 fuses_internal_16khz
 ```
 
@@ -63,8 +63,8 @@ make help
 
 ### download and install:
 ```
-https://www.microchip.com/en-us/development-tools-tools-and-software/gcc-compilers-avr-and-arm \
-https://sourceforge.net/projects/gnuwin32/files/make/ \
+https://www.microchip.com/en-us/development-tools-tools-and-software/gcc-compilers-avr-and-arm
+https://sourceforge.net/projects/gnuwin32/files/make/
 https://sourceforge.net/projects/winavr/
 ```
 
@@ -77,8 +77,8 @@ C:\Program Files\avrdude
 
 ### test functionality in terminal:
 ```
-make -v\
-avr-gcc --version\
+make -v
+avr-gcc --version
 avrdude
 ```
 
@@ -97,7 +97,7 @@ source: https://www.fischl.de/usbasp/usbasp.2011-05-28.tar.gz
 
 ### unzip:
 ```
-tar -xvf usbasp.2011-05-28.tar.gz \
+tar -xvf usbasp.2011-05-28.tar.gz
 cd /usbasp.2011-05-28
 ```
 
