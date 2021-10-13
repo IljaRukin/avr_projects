@@ -114,8 +114,7 @@ int main(void)
 
 
 	while(1) {
-		SMCR |= ( (1 << SM2) | (1 << SM1) | (0 << SM0) );	//power down
-		SMCR &= ~( (1 << SM2) | (1 << SM1) | (0 << SM0) );	//power down
+		SMCR |= ( (1 << SM2) | (1 << SM1) | (0 << SM0) | (1<<SE) );	//power down
 	}
 	return 0;
 }
