@@ -358,7 +358,7 @@ void init(void)
 	PORTB &= ~0b00110011;	///setup
 	PORTB |=  0b00001100;	///setup
 
-	//setup timer1 interrupt on overflow
+	//setup timer0 interrupt on overflow
 	TCCR0B |= (1 << CS02) | (0 << CS01) | (1 << CS00); 	//8bit timer with prescaler of 1024 (16mhz/1024/256 -> 61Hz)
 	TIMSK0 |= (1 << TOIE0);					//enable timer overflow interrupt
 	TCNT0 = 0;				//set timer value
