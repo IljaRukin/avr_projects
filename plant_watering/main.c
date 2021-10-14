@@ -93,7 +93,6 @@ int main(void)
 	PORTD &= ~(1 << PD6);	//LED off
 
 	//sleep mode
-	SMCR |= (1 << SE);	//enable sleep modes
 	MCUCR |= (1 << BODS) | (1 << BODSE);	//disable brown out detection
 	//additional power save configuration
 	PRR |= (1 << PRTWI) | (1 << PRTIM2) | (1 << PRTIM0) | (1 << PRUSART0);//do not disable adc (1 << PRADC) and Timer1 (1 << PRTIM1)
